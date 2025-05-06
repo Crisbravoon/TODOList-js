@@ -1,26 +1,22 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useStoreTask } from "../../store/tasks.store";
 import { useShallow } from "zustand/shallow";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const TaskForm = () => {
-  
+
   const [taskForm, setTaskForm] = useState("");
 
   const addTask = useStoreTask(useShallow((state) => state.addTask));
-  const tasks = useStoreTask(useShallow((state) => state.tasks));
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     addTask(taskForm);
-    console.log("Tareas Agregadas:", { tasks });
+  
     setTaskForm("");
   };
-
-  useEffect(() => {
-    console.log("Tareas Agregadas.", tasks);
-  }, [tasks]);
 
   return (
     <div className="bg-gray-100 rounded-md shadow-md w-full">
@@ -39,6 +35,7 @@ export const TaskForm = () => {
           Guardar
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };
